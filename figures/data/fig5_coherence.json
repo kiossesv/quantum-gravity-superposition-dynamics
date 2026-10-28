@@ -1,0 +1,133 @@
+{
+  "figure": "fig5_coherence",
+  "config": {
+    "description": "Branch coherence. (a) Visibility |O_12(t)| against Eq. (18) for the baseline (lab and free-fall frame) and the fountain case (lab and free-fall frame). (b) Relative-phase error against Eq. (19) for the baseline: uncorrected (Eq. 33), corrected lab frame, free-fall frame. Also writes the lab/free-fall comparison table for the fountain case.",
+    "baseline": {
+      "lab": "two_branch_lab",
+      "lab_uncorrected": "two_branch_lab_uncorrected",
+      "freefall": "two_branch_freefall",
+      "time": {
+        "dt": 0.01,
+        "T": 5.0,
+        "sample_every": 5
+      }
+    },
+    "fountain": {
+      "lab": "fountain_lab",
+      "freefall": "fountain_freefall",
+      "time": {
+        "dt": 0.01,
+        "T": 20.0,
+        "sample_every": 20
+      }
+    },
+    "visibility_floor": 1e-08
+  },
+  "derived": {
+    "base_lab": {
+      "max_norm_drift": 8.992806499463768e-14,
+      "max_l2_error": 4.812858302521908e-14,
+      "max_x_error": 8.826273045769994e-15,
+      "max_p_error": 3.552713678800501e-15,
+      "max_visibility_error": 3.26405569239796e-14,
+      "max_relative_phase_error": 3.7793296943945704e-13,
+      "phase_resolved_until": 5.0,
+      "wall_s": 0.011681267000085427,
+      "T_val": 5.896174725062446
+    },
+    "base_lab_unc": {
+      "max_norm_drift": 8.881784197001252e-14,
+      "max_l2_error": 2.9999999997362286e-05,
+      "max_x_error": 1.4814538484841933e-14,
+      "max_p_error": 2.6645352591003757e-15,
+      "max_visibility_error": 3.241851231905457e-14,
+      "max_relative_phase_error": 1.6666666269573102e-05,
+      "phase_resolved_until": 5.0,
+      "wall_s": 0.010949514000003546,
+      "T_val": 5.896174725062446
+    },
+    "base_ff": {
+      "max_norm_drift": 7.771561172376096e-14,
+      "max_l2_error": 4.213847134048779e-14,
+      "max_x_error": 7.993605777301127e-14,
+      "max_p_error": 1.4876988529977098e-14,
+      "max_visibility_error": 2.3092638912203256e-14,
+      "max_relative_phase_error": 4.43221189871521e-13,
+      "phase_resolved_until": 5.0,
+      "wall_s": 0.008780306999824461,
+      "T_val": 5.59770990081358
+    },
+    "fount_lab": {
+      "max_norm_drift": 6.754596881819452e-13,
+      "max_l2_error": 3.503878413381781e-11,
+      "max_x_error": 1.2505552149377763e-12,
+      "max_p_error": 1.9895196601282805e-13,
+      "max_visibility_error": 4.141131881851834e-14,
+      "max_relative_phase_error": 4.973725218819861e-09,
+      "phase_resolved_until": 7.2,
+      "wall_s": 17.191519851000066,
+      "T_val": 20.519182316298952
+    },
+    "fount_ff": {
+      "max_norm_drift": 3.850253449400043e-13,
+      "max_l2_error": 1.9672035928541938e-13,
+      "max_x_error": 6.394884621840902e-13,
+      "max_p_error": 5.684341886080802e-14,
+      "max_visibility_error": 2.0095036745715333e-14,
+      "max_relative_phase_error": 4.7343510086025136e-08,
+      "phase_resolved_until": 7.2,
+      "wall_s": 0.09436077200007276,
+      "T_val": 20.92401046351503
+    },
+    "fountain_table": [
+      {
+        "label": "lab frame",
+        "L": 1344.0,
+        "N": 131072,
+        "N_min": 70179.3016501538,
+        "T_val": 20.519182316298952,
+        "steps": 2000,
+        "wall": 17.191519851000066,
+        "l2": 3.503878413381781e-11,
+        "dO": 5.226440333980096e-13
+      },
+      {
+        "label": "free-fall frame",
+        "L": 320.0,
+        "N": 1024,
+        "N_min": 916.9382607981756,
+        "T_val": 20.92401046351503,
+        "steps": 2000,
+        "wall": 0.09436077200007276,
+        "l2": 1.9672035928541938e-13,
+        "dO": 2.8150667542725917e-14
+      }
+    ],
+    "lab_roundoff_floor": {
+      "double_reference_error": [
+        2.5847855121195443e-12,
+        7.447086833669763e-11
+      ],
+      "lab_final_error_dt=0.01": [
+        1.7874607455700778e-11,
+        1.6693477050256285e-11
+      ],
+      "lab_final_error_dt=0.04": [
+        1.4593056319969605e-11,
+        1.444091042092753e-11
+      ],
+      "estimate_eps_p2T_over_2m_hbar": 7.51754214434186e-11
+    },
+    "fountain_N_min_release_from_rest": 235534.15179162557,
+    "speedup_wall": 182.18926664765746,
+    "relative_phase_at_T_fountain_rad": -10506.666666666664,
+    "relative_phase_at_T_baseline_rad": 3.333333333333332
+  },
+  "branchgravity": "0.2.0.dev0",
+  "numpy": "2.5.3",
+  "matplotlib": "3.11.2",
+  "python": "3.13.17",
+  "platform": "Linux-6.18.44-fc-v180-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "created": "2026-10-28T09:34:42+00:00"
+}

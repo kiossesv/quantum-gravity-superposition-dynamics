@@ -1,6 +1,6 @@
 {
   "name": "two_branch_lab",
-  "description": "Baseline two-branch run of the paper (lab frame, phase-corrected Strang). Parameters as in the original Figs. 1-2.",
+  "description": "Baseline two-branch run (lab frame, phase-corrected). Grid sized with the validity criterion for roundoff tolerance (delta = 1e-28, kappa = 11.06): T_val = 5.90 > T.",
   "physics": {
     "hbar": 1.0,
     "mass": 1.0,
@@ -14,8 +14,8 @@
     "weights": null
   },
   "grid": {
-    "L": 100.0,
-    "N": 2048
+    "L": 80.0,
+    "N": 320
   },
   "time": {
     "dt": 0.01,
@@ -29,7 +29,7 @@
     "g_ref": null
   },
   "validity": {
-    "delta": 1e-12,
+    "delta": 1e-28,
     "action": "warn"
   }
 }

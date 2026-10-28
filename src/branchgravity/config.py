@@ -9,8 +9,13 @@ Schema (all keys optional except grid and time):
   "time":       {"dt": 0.01, "T": 5.0, "sample_every": 10},
   "propagator": {"frame": "lab" | "freefall", "ordering": "VTV" | "TVT",
                  "phase_correction": true, "g_ref": null},
-  "validity":   {"delta": 1e-12, "action": "warn" | "raise" | "ignore"}
+  "validity":   {"delta": 1e-12, "action": "warn" | "raise" | "ignore"},
+  "diagnostics": {"extended_reference": false}
 }
+
+"extended_reference" evaluates the exact reference of Eq. (16) with the phase reduced in
+long double precision (see analytic.gaussian_uniform_field); use it for runs whose phases
+reach ~1e4 rad, where a double-precision reference is itself in error by eps * |phase|.
 
 In the "freefall" frame, "grid" describes the co-moving grid centred on the reference
 trajectory. All reported observables are converted to the laboratory frame.
@@ -69,18 +74,25 @@ class ValidityConfig:
 
 
 @dataclass
+class DiagnosticsConfig:
+    extended_reference: bool = False
+
+
+@dataclass
 class SimulationConfig:
     grid: GridConfig
     time: TimeConfig
     physics: PhysicsConfig = field(default_factory=PhysicsConfig)
     propagator: PropagatorConfig = field(default_factory=PropagatorConfig)
     validity: ValidityConfig = field(default_factory=ValidityConfig)
+    diagnostics: DiagnosticsConfig = field(default_factory=DiagnosticsConfig)
     name: str = "unnamed"
     description: str = ""
 
     @classmethod
     def from_dict(cls, d):
-        known = {"grid", "time", "physics", "propagator", "validity", "name", "description"}
+        known = {"grid", "time", "physics", "propagator", "validity", "diagnostics", "name",
+                 "description"}
         unknown = set(d) - known
         if unknown:
             raise ValueError(f"unknown config sections: {sorted(unknown)}")
@@ -90,6 +102,7 @@ class SimulationConfig:
             physics=PhysicsConfig(**d.get("physics", {})),
             propagator=PropagatorConfig(**d.get("propagator", {})),
             validity=ValidityConfig(**d.get("validity", {})),
+            diagnostics=DiagnosticsConfig(**d.get("diagnostics", {})),
             name=d.get("name", "unnamed"),
             description=d.get("description", ""),
         )
@@ -165,10 +178,11 @@ def run(cfg, store_states=False):
     check_run(report, cfg.time.T, action=cfg.validity.action)
 
     grid, frame = sim.grid, sim.frame
+    ext = cfg.diagnostics.extended_reference
     if frame is None:
         def exact(t):
             return analytic.branch_states_exact(grid.x, t, ph.g, ph.x0, ph.p0, ph.sigma,
-                                                ph.mass, ph.hbar)
+                                                ph.mass, ph.hbar, extended=ext)
         to_lab_x = lambda v, t: v
         to_lab_p = lambda v, t: v
         to_lab_O = lambda O, t: O
@@ -177,7 +191,7 @@ def run(cfg, store_states=False):
 
         def exact(t):
             return analytic.branch_states_exact(grid.x, t, res, 0.0, 0.0, ph.sigma,
-                                                ph.mass, ph.hbar)
+                                                ph.mass, ph.hbar, extended=ext)
         to_lab_x = frame.lab_x
         to_lab_p = frame.lab_p
         to_lab_O = lambda O, t: frame.lab_overlaps(O, t, ph.g)

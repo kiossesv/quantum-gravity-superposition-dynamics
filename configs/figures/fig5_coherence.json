@@ -1,0 +1,8 @@
+{
+  "description": "Branch coherence. (a) Visibility |O_12(t)| against Eq. (18) for the baseline (lab and free-fall frame) and the fountain case (lab and free-fall frame). (b) Relative-phase error against Eq. (19) for the baseline: uncorrected (Eq. 33), corrected lab frame, free-fall frame. Also writes the lab/free-fall comparison table for the fountain case.",
+  "baseline": {"lab": "two_branch_lab", "lab_uncorrected": "two_branch_lab_uncorrected", "freefall": "two_branch_freefall",
+               "time": {"dt": 0.01, "T": 5.0, "sample_every": 5}},
+  "fountain": {"lab": "fountain_lab", "freefall": "fountain_freefall",
+               "time": {"dt": 0.01, "T": 20.0, "sample_every": 20}},
+  "visibility_floor": 1e-8
+}

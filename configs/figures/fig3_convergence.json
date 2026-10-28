@@ -1,0 +1,49 @@
+{
+  "description": "Convergence beyond uniform fields. (a) Temporal: harmonic-oscillator coherent state against its exact solution (with and without the counter-term) and a quartic oscillator against a fine-step reference. (b) Spatial: uniform-field Gaussian against Eq. (16) as a function of N at fixed L.",
+  "temporal": {
+    "T": 6.4,
+    "dts": [
+      0.2,
+      0.1,
+      0.05,
+      0.025,
+      0.0125,
+      0.00625
+    ],
+    "harmonic": {
+      "omega": 1.0,
+      "x0": 2.0,
+      "p0": 1.0,
+      "L": 40.0,
+      "N": 256
+    },
+    "quartic": {
+      "lam": 0.25,
+      "x0": 1.5,
+      "p0": 0.0,
+      "sigma": 0.7,
+      "L": 24.0,
+      "N": 256,
+      "dt_ref": 0.00025
+    }
+  },
+  "spatial": {
+    "base": "two_branch_lab",
+    "N": [
+      128,
+      144,
+      160,
+      176,
+      192,
+      208,
+      224,
+      240,
+      256,
+      288,
+      320,
+      384
+    ],
+    "T": 5.0,
+    "dt": 0.01
+  }
+}

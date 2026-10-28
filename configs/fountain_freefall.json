@@ -1,12 +1,12 @@
 {
-  "name": "earth_gravity_freefall",
-  "description": "Earth-like fall (g ~ 18.4 in units hbar = m = sigma = 1, i.e. Rb-87 with sigma = 1 um) with a 2% branch difference over T = 20 (27 ms). Lab-frame propagation would need N_min ~ 2.3e5; the co-moving grid uses 1024 points.",
+  "name": "fountain_freefall",
+  "description": "Atomic-fountain-like launch in Earth-like gravity (g ~ 18.2 in units hbar = m = sigma = 1, i.e. Rb-87 with sigma = 1 um), 2% branch difference, T = 20 (27 ms). Free-fall frame, 1024 points (N_min = 917 at delta = 1e-28).",
   "physics": {
     "hbar": 1.0,
     "mass": 1.0,
     "sigma": 1.0,
-    "x0": 0.0,
-    "p0": 0.0,
+    "x0": -460.0,
+    "p0": 184.0,
     "g": [
       18.0,
       18.4
@@ -14,7 +14,7 @@
     "weights": null
   },
   "grid": {
-    "L": 256.0,
+    "L": 320.0,
     "N": 1024
   },
   "time": {
@@ -29,7 +29,10 @@
     "g_ref": null
   },
   "validity": {
-    "delta": 1e-12,
+    "delta": 1e-28,
     "action": "warn"
+  },
+  "diagnostics": {
+    "extended_reference": true
   }
 }

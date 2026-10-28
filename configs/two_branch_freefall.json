@@ -1,6 +1,6 @@
 {
   "name": "two_branch_freefall",
-  "description": "Same physics as two_branch_lab propagated in the freely falling frame on a 128-point co-moving grid; overlaps and centroids are converted back to the lab frame.",
+  "description": "Same physics as two_branch_lab in the freely falling frame; co-moving grid sized for delta = 1e-28 (T_val = 5.60).",
   "physics": {
     "hbar": 1.0,
     "mass": 1.0,
@@ -14,8 +14,8 @@
     "weights": null
   },
   "grid": {
-    "L": 56.0,
-    "N": 128
+    "L": 72.0,
+    "N": 160
   },
   "time": {
     "dt": 0.01,
@@ -29,7 +29,7 @@
     "g_ref": null
   },
   "validity": {
-    "delta": 1e-12,
+    "delta": 1e-28,
     "action": "warn"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "description": "Cost of one Strang step for B branches stored as a (B, N) array (one batched FFT pair per step). Uniform-field propagator, phase correction on.",
+  "N": [256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536],
+  "B": [1, 2, 4, 8],
+  "min_seconds_per_measurement": 0.3,
+  "repeats": 5,
+  "L_per_point": 0.25
+}

@@ -69,3 +69,20 @@ def test_action_derivative_is_lagrangian():
     dS = (an.classical_action(t + h, g, x0, p0, m) - an.classical_action(t - h, g, x0, p0, m)) / (2 * h)
     x, p = an.classical_trajectory(t, g, x0, p0, m)
     assert abs(dS - (p**2 / (2 * m) - m * g * x)) < 1e-7
+
+
+def test_extended_reference():
+    """Extended-precision evaluation of Eq. (16): identical for small phases, and for
+    phases ~1e5 rad it removes the error of the double-precision reference itself."""
+    g = bg.Grid(80.0, 320)
+    a = an.gaussian_uniform_field(g.x, 3.0, 1.2, -10.0, 5.0, 1.0)
+    b = an.gaussian_uniform_field(g.x, 3.0, 1.2, -10.0, 5.0, 1.0, extended=True)
+    assert np.max(np.abs(a - b)) < 1e-14
+    if np.finfo(np.longdouble).eps > 1e-18:          # long double == double here
+        return
+    x = np.linspace(-560.0, -360.0, 4001)            # the packet is centred at -460 at t = 20
+    ref = an.gaussian_uniform_field(x, 20.0, 18.4, -460.0, 184.0, 1.0, extended=True)
+    dbl = an.gaussian_uniform_field(x, 20.0, 18.4, -460.0, 184.0, 1.0)
+    # both normalized Gaussians agree in modulus; the difference is a phase error ~ eps*|phase|
+    assert np.allclose(np.abs(ref), np.abs(dbl), atol=1e-13)
+    assert np.max(np.abs(ref - dbl)) > 1e-12

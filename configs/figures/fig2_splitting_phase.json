@@ -1,0 +1,6 @@
+{
+  "description": "Splitting error for uniform fields as a function of the time step: global phase (Eq. 32) for both orderings, and L2 error with and without the correction of Eq. (34).",
+  "base": "two_branch_lab",
+  "T": 5.0,
+  "dts": [0.5, 0.25, 0.1, 0.05, 0.025, 0.01, 0.005]
+}

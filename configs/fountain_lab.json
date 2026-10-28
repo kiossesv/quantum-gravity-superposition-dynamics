@@ -1,0 +1,38 @@
+{
+  "name": "fountain_lab",
+  "description": "Lab-frame reference for fountain_freefall: N = 2^17 points (N_min = 7.0e4 at delta = 1e-28; 2.4e5 for a release from rest).",
+  "physics": {
+    "hbar": 1.0,
+    "mass": 1.0,
+    "sigma": 1.0,
+    "x0": -460.0,
+    "p0": 184.0,
+    "g": [
+      18.0,
+      18.4
+    ],
+    "weights": null
+  },
+  "grid": {
+    "L": 1344.0,
+    "N": 131072
+  },
+  "time": {
+    "dt": 0.01,
+    "T": 20.0,
+    "sample_every": 50
+  },
+  "propagator": {
+    "frame": "lab",
+    "ordering": "VTV",
+    "phase_correction": true,
+    "g_ref": null
+  },
+  "validity": {
+    "delta": 1e-28,
+    "action": "warn"
+  },
+  "diagnostics": {
+    "extended_reference": true
+  }
+}

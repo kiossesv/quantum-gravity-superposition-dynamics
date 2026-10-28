@@ -1,0 +1,50 @@
+{
+  "figure": "fig1_wavefunction",
+  "config": {
+    "description": "Wavefunction-level verification for uniform fields: L2 error against Eq. (16) with and without the splitting-phase correction, and branch-diagonal diagnostics of the uncorrected run.",
+    "base": "two_branch_lab",
+    "time": {
+      "dt": 0.01,
+      "T": 5.0,
+      "sample_every": 5
+    }
+  },
+  "derived": {
+    "uncorrected": {
+      "max_norm_drift": 8.881784197001252e-14,
+      "max_l2_error": 2.9999999997362286e-05,
+      "max_x_error": 1.4814538484841933e-14,
+      "max_p_error": 2.6645352591003757e-15,
+      "max_visibility_error": 3.241851231905457e-14,
+      "max_relative_phase_error": 1.6666666269573102e-05,
+      "phase_resolved_until": 5.0
+    },
+    "corrected": {
+      "max_norm_drift": 8.992806499463768e-14,
+      "max_l2_error": 4.812858302521908e-14,
+      "max_x_error": 8.826273045769994e-15,
+      "max_p_error": 3.552713678800501e-15,
+      "max_visibility_error": 3.26405569239796e-14,
+      "max_relative_phase_error": 3.7793296943945704e-13,
+      "phase_resolved_until": 5.0
+    },
+    "max_p_error_uncorrected": 2.6645352591003757e-15,
+    "predicted_final_l2_uncorrected": [
+      1.3333333333234571e-05,
+      2.9999999998875e-05
+    ],
+    "observed_final_l2_uncorrected": [
+      1.333333332788682e-05,
+      2.9999999997362286e-05
+    ],
+    "T_val": 5.896174725062446,
+    "kappa": 11.058232414058736
+  },
+  "branchgravity": "0.2.0.dev0",
+  "numpy": "2.5.3",
+  "matplotlib": "3.11.2",
+  "python": "3.13.17",
+  "platform": "Linux-6.18.44-fc-v180-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "created": "2026-10-28T09:24:57+00:00"
+}

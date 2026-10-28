@@ -1,0 +1,5 @@
+{
+  "description": "Wavefunction-level verification for uniform fields: L2 error against Eq. (16) with and without the splitting-phase correction, and branch-diagonal diagnostics of the uncorrected run.",
+  "base": "two_branch_lab",
+  "time": {"dt": 0.01, "T": 5.0, "sample_every": 5}
+}

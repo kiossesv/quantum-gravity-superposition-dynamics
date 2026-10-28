@@ -27,8 +27,9 @@ Gravitational Fields: A Split-Operator Approach* (V. I. Kiosses, in preparation)
 - Phase-space validity criterion: time of validity $T_{\rm val}$ (spatial and momentum
   windows) and minimum grid size $N_{\min}$, evaluated before a run.
 - Free-fall (co-moving) frame: removes the common fall so the grid only has to resolve the
-  relative motion of the branches. For an Earth-like fall over 27 ms this reduces the
-  required grid from $N_{\min}\approx 2.3\times 10^5$ to about $10^3$ points.
+  relative motion of the branches. For an Earth-like atomic fountain over 27 ms this reduces
+  the grid from $2^{17}$ to $2^{10}$ points, propagation time by about 180x, and the roundoff
+  floor from $\sim 10^{-11}$ to $\sim 10^{-13}$.
 - Exact references: Gaussian wavepacket in a uniform field (with phase), closed-form branch
   overlaps, harmonic-oscillator coherent states.
 - Observables: norms, $\langle x\rangle$, $\langle p\rangle$ (spectral), widths, energy,
@@ -52,11 +53,11 @@ import branchgravity as bg
 from branchgravity import analytic, diagnostics, observables
 
 g = [0.8, 1.2]                                   # two branches
-grid = bg.Grid(L=100.0, N=2048)
+grid = bg.Grid(L=80.0, N=320)                    # sized with the validity criterion
 prop = bg.StrangPropagator.uniform_field(grid, g, dt=0.01, phase_correction=True)
 psi0 = bg.branch_states(grid, len(g), x0=-10.0, p0=5.0, sigma=1.0)
 
-print(bg.time_of_validity(grid, g, -10.0, 5.0, 1.0, dt=0.01))   # check before running
+print(bg.time_of_validity(grid, g, -10.0, 5.0, 1.0, dt=0.01, delta=1e-28))  # T_val = 5.90
 
 psi = prop.propagate(psi0, n_steps=500)                         # t = 5
 O = observables.overlap_matrix(psi, grid)                       # <psi_b|psi_b'>
@@ -68,7 +69,7 @@ Free-fall frame:
 
 ```python
 frame = bg.FreeFallFrame.for_branches(g, x0=-10.0, p0=5.0)      # g_ref = midrange of g
-grid_c = bg.Grid(L=56.0, N=128)                                  # co-moving grid
+grid_c = bg.Grid(L=72.0, N=160)                                  # co-moving grid
 chi = frame.propagator(grid_c, g, dt=0.01).propagate(frame.initial_gaussian(grid_c, 1.0, 2), 500)
 O_lab = frame.lab_overlaps(observables.overlap_matrix(chi, grid_c), 5.0, g)
 psi_lab = frame.to_lab(chi, grid_c, 5.0, g, grid.x)             # back to lab coordinates
@@ -84,10 +85,11 @@ python scripts/run.py configs/two_branch_lab.json configs/two_branch_freefall.js
 |---|---|
 | `two_branch_lab` | Baseline two-branch run (lab frame, phase-corrected) |
 | `two_branch_lab_uncorrected` | Same without correction: relative-phase error of Eq. (33) |
-| `two_branch_freefall` | Same physics in the free-fall frame on 128 points |
+| `two_branch_freefall` | Same physics in the free-fall frame on 160 points |
 | `space_limited_single_branch` | Original Fig. 4 parameters; space-limited $T_{\rm val}=3.695$ |
 | `momentum_limited_single_branch` | Coarse grid; momentum-limited $T_{\rm val}=4.52$ |
-| `earth_gravity_freefall` | Earth-like fall, 2% branch difference, $T = 27$ ms |
+| `fountain_lab` | Rb-87 fountain in Earth's gravity, 2% branch difference, $T$ = 27 ms; lab frame, $N = 2^{17}$ |
+| `fountain_freefall` | Same in the free-fall frame, $N = 1024$ |
 
 Each run writes `results/<name>.npz` (time series of norms, centroids, overlaps, errors
 against the exact solution) and `results/<name>.json` (config, summary, software versions).
@@ -98,7 +100,7 @@ against the exact solution) and `results/<name>.json` (config, summary, software
 pytest                       # or, without pytest:  python tests/run_tests.py
 ```
 
-The suite (48 tests, about 2 s) checks, among other things:
+The suite (49 tests, about 2 s) checks, among other things:
 
 - the exact references solve the Schrödinger equation and the overlap formula matches quadrature;
 - the Strang error is exactly the predicted global phase for both orderings and $\Delta t$ up to 0.5;
@@ -106,7 +108,22 @@ The suite (48 tests, about 2 s) checks, among other things:
 - second-order convergence for a harmonic-oscillator coherent state;
 - a zero branch stays bitwise zero and a branch run alone is bitwise identical to the same branch run with others;
 - the predicted $T_{\rm val}$ matches the observed onset of failure within 10% in space- and momentum-limited cases;
+- the extended-precision evaluation of the exact solution agrees with the double-precision one for small phases;
 - free-fall and lab-frame propagation agree to $10^{-12}$.
+
+## Reproducing the figures of the paper
+
+```bash
+python scripts/figures/make_all.py              # all figures and tables, about 2 minutes
+python scripts/figures/make_all.py fig4_validity   # a single figure
+```
+
+Each script reads `configs/figures/<name>.json` (and the run configs it refers to) and writes
+`figures/<name>.pdf/.png`, the plotted data to `figures/data/<name>.npz`, and the derived
+numbers quoted in the paper, with software versions, to `figures/data/<name>.json`. The
+parameter table (`figures/table_parameters.tex`) and the fountain comparison
+(`figures/table_fountain.tex`) are generated from the same files. Timings (Fig. 6, Table 3)
+depend on the machine.
 
 ## Package layout
 
@@ -122,8 +139,10 @@ src/branchgravity/
   validity.py      time of validity, grid requirements, pre-run check
   freefall.py      free-fall (co-moving) frame and Fourier interpolation
   config.py        JSON configurations and run()
-configs/           stored run configurations
+configs/           stored run configurations (configs/figures: one per figure)
 scripts/run.py     command-line runner
+scripts/figures/   one script per figure, make_tables.py, make_all.py
+figures/           generated figures, tables and their data
 tests/             test suite (pytest or tests/run_tests.py)
 ```
 

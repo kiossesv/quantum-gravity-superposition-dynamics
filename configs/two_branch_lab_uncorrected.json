@@ -14,8 +14,8 @@
     "weights": null
   },
   "grid": {
-    "L": 100.0,
-    "N": 2048
+    "L": 80.0,
+    "N": 320
   },
   "time": {
     "dt": 0.01,
@@ -29,7 +29,7 @@
     "g_ref": null
   },
   "validity": {
-    "delta": 1e-12,
+    "delta": 1e-28,
     "action": "warn"
   }
 }

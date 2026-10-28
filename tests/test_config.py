@@ -28,7 +28,7 @@ def test_roundtrip():
         path = Path(d) / "c.json"
         cfg.save(path)
         assert SimulationConfig.load(path) == cfg
-        assert json.loads(path.read_text())["grid"]["N"] == 2048
+        assert json.loads(path.read_text())["grid"]["N"] == 320
 
 
 def test_unknown_section_rejected():
@@ -57,10 +57,10 @@ def test_uncorrected_config_shows_eq33_phase_error():
     assert s["max_visibility_error"] < 1e-13
 
 
-def test_earth_gravity_freefall_config():
+def test_fountain_freefall_config():
     """Common fall dominated: co-moving grid with 1024 points reproduces the exact branch
     states and overlaps; the phase is checked while the visibility is resolvable."""
-    out = run(SimulationConfig.load(CONFIGS / "earth_gravity_freefall.json"))
+    out = run(SimulationConfig.load(CONFIGS / "fountain_freefall.json"))
     s = summarize(out)
     assert s["max_l2_error"] < 1e-8
     assert s["phase_resolved_until"] >= 6.0

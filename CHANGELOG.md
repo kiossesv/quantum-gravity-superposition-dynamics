@@ -29,15 +29,23 @@ the installable package `src/branchgravity/`.
   of lab-frame states, centroids and overlaps.
 - JSON configurations (`configs/`), command-line runner (`scripts/run.py`) that stores
   results with software versions.
-- Test suite (48 tests), runnable with pytest or `python tests/run_tests.py`.
+- Test suite (49 tests), runnable with pytest or `python tests/run_tests.py`.
+- Figure scripts (`scripts/figures/`), one config per figure (`configs/figures/`), generated
+  parameter tables, and stored figure data with the numbers quoted in the paper.
+- `analytic.gaussian_uniform_field(..., extended=True)` and the config option
+  `diagnostics.extended_reference`: the exact reference with its phase reduced in long double
+  precision, needed when phases reach ~1e4 rad (fountain case).
 
 ### Changed
 - The `t_max = p_max/(m|g|)` bound is superseded by the validity criterion: the original
   Fig. 4 failure is spatial wrap-around at t = 3.70, predicted as T_val = 3.695.
 - `evolve()` observable callbacks receive `(psi, t)`.
 - `scipy` is no longer a dependency.
+- Baseline configs use grids sized with the validity criterion at delta = 1e-28
+  (L = 80, N = 320 in the lab frame; L = 72, N = 160 in the free-fall frame).
+- `earth_gravity_freefall` replaced by `fountain_lab` / `fountain_freefall`.
 
 ### Removed
 - `src/solvers.py`, `src/observables.py`, `src/initial_states.py`, `src/potentials.py`,
   `src/utils.py`, `src/benchmark_*.py` (superseded; available in the git history).
-  Figure scripts for the revised paper are added with the Section 4 revision.
+  The old figures in `src/results/` are superseded by `figures/`.
