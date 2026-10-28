@@ -1,3 +1,4 @@
-numpy
-scipy
-matplotlib
+# Versions used to produce and test the results in the paper.
+# Minimum requirement for the package itself: numpy>=1.24 (see pyproject.toml).
+numpy==2.5.3
+matplotlib==3.11.2

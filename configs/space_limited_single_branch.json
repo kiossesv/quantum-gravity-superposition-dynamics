@@ -1,0 +1,34 @@
+{
+  "name": "space_limited_single_branch",
+  "description": "Parameters of the original Fig. 4 (g = 6.4), run to just below the predicted T_val = 3.695 (space-limited).",
+  "physics": {
+    "hbar": 1.0,
+    "mass": 1.0,
+    "sigma": 1.0,
+    "x0": -10.0,
+    "p0": 5.0,
+    "g": [
+      6.4
+    ],
+    "weights": null
+  },
+  "grid": {
+    "L": 100.0,
+    "N": 2048
+  },
+  "time": {
+    "dt": 0.01,
+    "T": 3.6,
+    "sample_every": 10
+  },
+  "propagator": {
+    "frame": "lab",
+    "ordering": "VTV",
+    "phase_correction": true,
+    "g_ref": null
+  },
+  "validity": {
+    "delta": 1e-12,
+    "action": "warn"
+  }
+}
